@@ -1,0 +1,24 @@
+body{
+    background-color: rgb(156, 189, 156);
+    font-family: 'Courier New', Courier, monospace
+}
+
+h1{
+    font-size: 50px;
+    font-family:'Courier New', Courier, monospace
+}
+
+#parameterList{
+    list-style: none;
+    display: flex;
+    align-items: flex-start;
+}
+
+li{
+    margin: 0 20px;
+}
+
+ul{
+    padding: 0;
+    margin: 0 auto;
+}

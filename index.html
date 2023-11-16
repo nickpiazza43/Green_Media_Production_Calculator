@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green_Media_Production</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1>"Green Media Production" - a calculator</h1>
+
+    <br>
+    <article>Green Media Production is an upcoming topic in the industry and has become more important for companies, especially in public broadcasting.</article>
+    <br>
+    <article> One way or another, most of them do not know how to calculate their carbon footprint. This calculator is not complete, but it
+        gives a little insight of what amount of CO2 to expect from a film set. It may be higher depending on the production and their needs.    
+    </article>
+
+
+    <h1>Parameter</h1>
+
+    <ul title="Liste" id="parameterList">
+       
+        <li id="dataHotel">
+            <h2>Hotelübernachtung</h2>
+            <label>Anzahl Zimmer:</label><br>
+            <input type="number" id="countRooms" class="inputField" value="0" min="0" max="10"><br>
+            <label>Anzahl Nächte:</label><br>
+            <input type="number" id="countNights" class="inputField" value="0" min="0" max="10"><br>
+            <p id="accommodation_type_hotel_stay"></p>
+        </li>
+
+        <li id="dataEquipment">
+            <h2>Equipment</h2>
+            <label>Geld ausgegeben:</label><br>
+            <input type="number" id="countMoney" class="inputField" value="0" min="0"><br>
+            <p id="electrical_equipment-type_radio_television_communication_equipment_apparatus"></p>
+        </li>
+
+        <li id="dataReisekilometer">
+            <h2>Reisekilometer</h2>
+            <input type="checkbox" id="vehicle1" name="vehicle1" value="Zug">
+            <label for="vehicle1"> I/We go by train.</label><br>
+            <input type="checkbox" id="vehicle2" name="vehicle2" value="Auto">
+            <label for="vehicle2"> I/We go by car.</label><br>
+            <label>Anzahl Passagiere:</label><br>
+            <input type="number" id="countPassengerTrain" class="inputField" value="0" min="0" max="10"><br>
+            <label>Anzahl Kilometer:</label><br>
+            <input type="number" id="countKilometerTrain" class="inputField" value="0" min="0" max="10"><br>
+            <p id="passenger_vehicle-vehicle_type_car-fuel_source_diesel-distance_na-engine_size_medium"></p>
+            <p id="passenger_train-route_type_long_distance-fuel_source_diesel"></p>
+        </li>
+
+    </ul>
+
+
+    <p id="outputText"></p>
+
+    <div id="outputDiv"></div>
+
+
+    <article> One way or another, most of them do not know how to calculate their carbon footprint. This calculator is not complete, but it
+        gives a little insight of what amount of CO2 to expect from a film set. It may be higher depending on the production and their needs.    
+    </article>
+
+    <footer>
+        <p>Green Media Production</p>
+        <p>© 2023</p>
+        <p>This website was made by <a href="https://www.digezz.ch/author/nico-caccivio/">Nico Caccivio</a>. All rights reserved.</p>
+    </footer>
+
+
+    <!-- <script src="js/scripts.js"></script> -->
+    <script src="js/script.js"></script>
+
+</body>
+
+
+
+</html>
