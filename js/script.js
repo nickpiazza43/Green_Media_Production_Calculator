@@ -40,10 +40,10 @@ const dataEquipment = {
 }
 
 
-let countTravelCarP = 1;
-let countTravelCarD = 1;
-const countPassengerTrainInput = document.getElementById('countPassengerTrain');
-const countKilometerTrainInput = document.getElementById('countKilometerTrain');
+let countTravelPassenger = 1;
+let countTravelDistance = 1;
+const countPassengerInput = document.getElementById('countPassenger');
+const countDistanceInput = document.getElementById('countDistance');
 
 const dataTravelCar = {
 
@@ -56,15 +56,11 @@ const dataTravelCar = {
         "data_version": "^0"
     },
     "parameters": {
-        "passengers": countTravelCarP,
-        "distance": countTravelCarD,
+        "passengers": countTravelPassenger,
+        "distance": countTravelDistance,
         "distance_unit": "km"
     }
 }
-
-
-let countTravelTrainP = 1;
-let countTravelTrainD = 1;
 
 const dataTravelTrain = {
 
@@ -77,8 +73,8 @@ const dataTravelTrain = {
         "data_version": "^0"
     },
     "parameters": {
-        "passengers": countTravelTrainP,
-        "distance": countTravelTrainD,
+        "passengers": countTravelPassenger,
+        "distance": countTravelDistance,
         "distance_unit": "km"
     }
 }
@@ -117,6 +113,11 @@ function executeFetch(data, targetId) {
             
             showData(data, targetId);
 
+            //animateCamera();
+
+            //data.co2 von allen herauslesen und in einem const array speichern, dass drei Variablen hat. Dieses dann so präparieren, dass
+            //die Zahlen addiert werden können. Dann die Summe in der HTML anzeigen lassen.
+
         })
         .catch(error => {
             console.error('There was a problem with the fetch:', error.message);
@@ -130,7 +131,7 @@ function showData(data, targetId) {
     const listElement = document.getElementById(targetId);
     listElement.innerHTML = '';
     let c02 = data.co2e;
-    console.log(data.co2e);
+    //console.log(data.co2e);
     listElement.innerHTML = c02 + " kg CO2";
 };
 
@@ -141,6 +142,10 @@ function updateData(data, count, id) {
         data.parameters.number = count;
     } else if (id == 2){
         data.parameters.money = count;
+    } else if (id == 3){
+        data.parameters.passengers = count;
+    } else if (id == 4){
+        data.parameters.distance = count;
     }
 }
 
@@ -149,12 +154,13 @@ function updateData(data, count, id) {
 function handleInput(event) {
     const inputId = event.target.id;
     let data, targetId;
-    //console.log(inputId,data,targetId)
+    //console.log(inputId, data, targetId)
 
     if (inputId === 'countRooms' || inputId === 'countNights') {
 
         data = dataHotel;
         targetId = 'accommodation_type_hotel_stay';
+        //console.log(inputId,data,targetId)
 
         const countRooms = parseFloat(countRoomsInput.value);
         const countNights = parseFloat(countNightsInput.value);
@@ -163,7 +169,7 @@ function handleInput(event) {
         if (!isNaN(countRooms) && !isNaN(countNights)) {
             // Multiplizieren der Werte und Anzeigen des Ergebnisses
             countHotel = countRooms * countNights;
-
+            
             // Aktualisieren von postDataHotel mit dem neuen Wert
             updateData(data, countHotel, 1);
 
@@ -180,31 +186,75 @@ function handleInput(event) {
 
         // Überprüfen, ob die eingegebenen Werte gültige Zahlen sind
         if (!isNaN(countMoney)) {
-            // Multiplizieren mit dem Wechselkurs zu USD und Anzeigen des Ergebnisses
+            // Multiplizieren mit dem Wechselkurs zu USD
             countEquipment = countMoney * 1.1;
-            console.log(countEquipment);
-             updateData(data, countEquipment,2);
+            
+            updateData(data, countEquipment, 2);
 
         } else {
             console.log('Ungültige Eingabe. Bitte geben Sie gültige Zahlen ein.');
         }
 
-    }
+    } else if (inputId === 'countPassenger' || inputId === 'countDistance' || inputId === 'vehicle1' || inputId === 'vehicle2') {
 
-    if (data && targetId) {
-        executeFetch(data, targetId);
-    }
-};
+        if (document.getElementById('vehicle1').checked) {
+            
+            data = dataTravelTrain;
+            targetId = 'train_and_car_both_diesel';
 
+            const countPassenger = parseFloat(countPassengerInput.value);
+            const countDistance = parseFloat(countDistanceInput.value);
 
-// Füge weitere Bedingungen hinzu, wenn benötigt...
+            // Überprüfen, ob die eingegebenen Werte gültige Zahlen sind
+            if (!isNaN(countPassenger) && !isNaN(countDistance)) {
+            // Multiplizieren der Werte und Anzeigen des Ergebnisses
+            
+            countTravelPassenger = countPassenger;
+            countTravelDistance = countDistance;
 
-// Fetch nur ausführen, wenn data und targetId gesetzt sind
+            updateData(data, countTravelPassenger, 3);
+            updateData(data, countTravelDistance, 4);
 
+            } else {
+                console.log('Ungültige Eingabe. Bitte geben Sie gültige Zahlen ein.');
+            }
 
+        } else if (document.getElementById('vehicle2').checked) {
 
+            data = dataTravelCar;
+            targetId = 'train_and_car_both_diesel';
 
-// Event Listener für Input-Felder
+            const countPassenger = parseFloat(countPassengerInput.value);
+            const countDistance = parseFloat(countDistanceInput.value);
+
+            // Überprüfen, ob die eingegebenen Werte gültige Zahlen sind
+            if (!isNaN(countPassenger) && !isNaN(countDistance)) {
+            // Multiplizieren der Werte und Anzeigen des Ergebnisses
+            
+            countTravelPassenger = countPassenger;
+            countTravelDistance = countDistance;
+
+            updateData(data, countTravelPassenger, 3);
+            updateData(data, countTravelDistance, 4);
+
+            }
+
+        }
+     
+        } else {
+        
+            console.log('Ungültige Eingabe. Bitte geben Sie gültige Zahlen ein.');
+        }
+
+        if (data && targetId) {
+            executeFetch(data, targetId);
+        }
+    };
+
+    
+  
+
+// Event Listener für alle Input-Felder
 const inputFields = document.querySelectorAll('.inputField');
 
 inputFields.forEach(inputField => {
@@ -212,6 +262,88 @@ inputFields.forEach(inputField => {
 });
 
 
+// Funktion für Checkboxen für alle Input-Felder
+function selectThisCheckbox(checkBox) {
+    let checkboxes = document.querySelectorAll('.checkbox');
+    checkboxes.forEach(function(currentCheckbox) {
+        if (currentCheckbox !== checkBox) {
+            currentCheckbox.checked = false;
+        }
+    });
+
+    checkboxes.forEach(function(currentCheckbox) {
+        currentCheckbox.parentElement.classList.remove('selected');
+    });
+    checkBox.parentElement.classList.add('selected');
+}
+
+
+/*
+const co2Emissions = document.querySelectorAll('.co2Emission');
+console.log(co2Emissions);
+*/
+
+
+/*
+function animateCamera() {
+    let bild = document.getElementById('animiertesBild');
+
+    // Berechne die Transformation basierend auf dem Wert
+    let rotationGrad = wert * 10; // Beispiel: Drehung um 10 Grad pro Einheit
+
+    // Wende die Transformation auf das Bild an
+    bild.style.transform = `rotate(${rotationGrad}deg)`;
+}
+
+// Beispielaufruf der Funktion mit einem Wert
+animateCamera(10);
+
+
+
+const ages = [32, 33, 16, 40];
+const result = ages.filter(checkAdult);
+
+function checkAdult(age) {
+  return age >= 18;
+}
+
+let sum = 0;
+const numbers = [65, 44, 12, 4];
+numbers.forEach(myFunction);
+
+function myFunction(item) {
+  sum += item;
+}
+
+
+const numbers = [15.5, 2.3, 1.1, 4.7];
+document.getElementById("demo").innerHTML = numbers.reduce(getSum, 0);
+
+function getSum(total, num) {
+  return total + Math.round(num);
+}
+
+// von stackoverflow
+function filter_list(l) {
+    return l.filter(x => typeof x === "number");
+  }
+  console.log(filter_list([1,2,'a','b']))
+
+//von matlab
+//newStr = erase(str,match) deletes all occurrences of match in str. The erase function returns the remaining text as newStr.
+//If match is an array, then erase deletes every occurrence of every element of match in str. The str and match arguments do not need to be the same size.
+  newStr = erase(str,match)
+
+
+//von matlab
+txt = 'Model1__DK1_5450.0 '
+pat = digitsPattern;
+onlyNumbers = extract(txt, pat)
+
+//https://thispointer.com/javascript-remove-non-numeric-characters-from-string/
+
+
+*/
 
 
 
@@ -267,4 +399,3 @@ collections.forEach(collection => {
 function updateDatas(countHotel) {
     data.parameters.number = countHotel;
 }*/
-

@@ -17,7 +17,12 @@
     </article>
 
 
-    <h1>Parameter</h1>
+    <div id="animationContainer">
+        <img id="animiertesBild" src="img/camera.jpg" alt="Animiertes Bild">
+    </div>
+
+
+    <h1>Kategorien</h1>
 
     <ul title="Liste" id="parameterList">
        
@@ -27,36 +32,33 @@
             <input type="number" id="countRooms" class="inputField" value="0" min="0" max="10"><br>
             <label>Anzahl Nächte:</label><br>
             <input type="number" id="countNights" class="inputField" value="0" min="0" max="10"><br>
-            <p id="accommodation_type_hotel_stay"></p>
+            <p id="accommodation_type_hotel_stay" class="co2Emission"></p>
         </li>
 
         <li id="dataEquipment">
             <h2>Equipment</h2>
             <label>Geld ausgegeben:</label><br>
             <input type="number" id="countMoney" class="inputField" value="0" min="0"><br>
-            <p id="electrical_equipment-type_radio_television_communication_equipment_apparatus"></p>
+            <p id="electrical_equipment-type_radio_television_communication_equipment_apparatus" class="co2Emission"></p>
         </li>
 
         <li id="dataReisekilometer">
             <h2>Reisekilometer</h2>
-            <input type="checkbox" id="vehicle1" name="vehicle1" value="Zug">
+            <input type="checkbox" id="vehicle1" class="checkbox inputField" value="Zug" onclick="selectThisCheckbox(this)">
             <label for="vehicle1"> I/We go by train.</label><br>
-            <input type="checkbox" id="vehicle2" name="vehicle2" value="Auto">
+            <input type="checkbox" id="vehicle2" class="checkbox inputField" value="Auto" onclick="selectThisCheckbox(this)">
             <label for="vehicle2"> I/We go by car.</label><br>
             <label>Anzahl Passagiere:</label><br>
-            <input type="number" id="countPassengerTrain" class="inputField" value="0" min="0" max="10"><br>
+            <input type="number" id="countPassenger" class="inputField" value="0" min="0"><br>
             <label>Anzahl Kilometer:</label><br>
-            <input type="number" id="countKilometerTrain" class="inputField" value="0" min="0" max="10"><br>
-            <p id="passenger_vehicle-vehicle_type_car-fuel_source_diesel-distance_na-engine_size_medium"></p>
-            <p id="passenger_train-route_type_long_distance-fuel_source_diesel"></p>
+            <input type="number" id="countDistance" class="inputField" value="0" min="0"><br>
+            <p id="train_and_car_both_diesel" class="co2Emission"></p>
         </li>
 
     </ul>
 
 
-    <p id="outputText"></p>
 
-    <div id="outputDiv"></div>
 
 
     <article> One way or another, most of them do not know how to calculate their carbon footprint. This calculator is not complete, but it

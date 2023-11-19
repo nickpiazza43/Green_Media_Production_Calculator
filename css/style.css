@@ -22,3 +22,20 @@ ul{
     padding: 0;
     margin: 0 auto;
 }
+
+.selected{
+    background-color: royalblue;
+}
+
+
+#animationContainer {
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+}
+
+#animiertesBild {
+    width: 100%;
+    height: auto;
+    transition: transform 0.5s ease-in-out;
+}
