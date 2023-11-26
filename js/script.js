@@ -80,6 +80,13 @@ const dataTravelTrain = {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+let co2Hotel = 0;
+let co2Travel = 0;
+let co2Equipment = 0;
+
+let co2Data = [co2Hotel, co2Travel, co2Equipment];
+
+
 
 
 
@@ -109,14 +116,15 @@ function executeFetch(data, targetId) {
         })
         .then(data => {
 
-            //console.log(data, targetId);
-            
+
+
             showData(data, targetId);
 
-            //animateCamera();
+            addData();
 
             //data.co2 von allen herauslesen und in einem const array speichern, dass drei Variablen hat. Dieses dann so präparieren, dass
             //die Zahlen addiert werden können. Dann die Summe in der HTML anzeigen lassen.
+            // console.log(cars);
 
         })
         .catch(error => {
@@ -124,27 +132,119 @@ function executeFetch(data, targetId) {
         });
 }
 
+
+
+
+///// Funktion, welche die Kamera je nach CO2-Ausstoss vergrössert /////
+
+function animateCamera(sum) {
+
+    let svg = document.getElementById('camera');
+    let blinkLight = document.getElementById('blinkLight');
+
+    if (sum < 100) {
+
+        svg.style.transform = `scale(1.1)`;
+        blinkLight.setAttribute('fill', 'green')
+  
+    } else if (sum < 200) {
+
+        svg.style.transform = `scale(1.2)`;
+        blinkLight.setAttribute('fill', 'red')
+        
+
+    } else if (sum < 300) {
+
+        svg.style.transform = `scale(1.4)`;
+        blinkLight.setAttribute('fill', 'red')
+
+    } else if (sum < 400) {
+
+        svg.style.transform = `scale(1.5)`;
+        blinkLight.setAttribute('fill', 'red')   
+
+    } else {
+        
+        alert("Your are generating too much CO2! Please reconsider your production plans for the sake of the environment.");
+
+    }
+
+};
+
+/* function animiere() { 
+  var ladebalken = document.getElementById('ladebalken');
+  ladebalken.animate(
+    [
+      {
+        width: '20px',
+        fill: 'green'
+      }, {
+        width: '200px',  
+        fill: 'lime'
+      }
+    ], {
+      duration: 2000,
+      iterations: 1,
+      fill: 'forwards'
+    })
+  }; */
+
+
+  
+
+
+///// Funktion, welche die CO2-Daten addiert und im HTML darstellt /////
+
+function addData() {
+    let sum = 0;
+    for (let i = 0; i < co2Data.length; i++) {
+        sum += co2Data[i];
+    }
+    sum = Math.round(sum);
+    //console.log(sum);
+    const listElement = document.getElementById('total');
+    listElement.innerHTML = '0 kg CO2';
+    listElement.innerHTML = " ungefähr " + sum + " kg CO2";
+
+    animateCamera(sum);
+
+};
+
+
+
 ///// Funktion, welche die CO2-Daten im HTML darstellt /////
 
 function showData(data, targetId) {
 
+    //console.log(data.co2e);
     const listElement = document.getElementById(targetId);
     listElement.innerHTML = '';
     let c02 = data.co2e;
-    //console.log(data.co2e);
     listElement.innerHTML = c02 + " kg CO2";
+
+
+    if (targetId === 'accommodation_type_hotel_stay') {
+        co2Data[0] = data.co2e;
+    } else if (targetId === 'electrical_equipment-type_radio_television_communication_equipment_apparatus') {
+        co2Data[1] = data.co2e;
+    } else if (targetId === 'train_and_car_both_diesel') {
+        co2Data[2] = data.co2e;
+    } else {
+        console.log('Ungültige Eingabe. Bitte geben Sie gültige Zahlen ein.');
+    };
+
 };
 
 ///// Funktion, welche die Inputdaten nach jeder Eingabe updaten je nach Aufbau des Javascriptobjektes /////
 
 function updateData(data, count, id) {
-    if(id == 1){
+    if (id == 1) {
         data.parameters.number = count;
-    } else if (id == 2){
+    } else if (id == 2) {
         data.parameters.money = count;
-    } else if (id == 3){
+    } else if (id == 3) {
         data.parameters.passengers = count;
-    } else if (id == 4){
+    } else if (id == 4) {
         data.parameters.distance = count;
     }
 }
@@ -169,7 +269,7 @@ function handleInput(event) {
         if (!isNaN(countRooms) && !isNaN(countNights)) {
             // Multiplizieren der Werte und Anzeigen des Ergebnisses
             countHotel = countRooms * countNights;
-            
+
             // Aktualisieren von postDataHotel mit dem neuen Wert
             updateData(data, countHotel, 1);
 
@@ -188,7 +288,7 @@ function handleInput(event) {
         if (!isNaN(countMoney)) {
             // Multiplizieren mit dem Wechselkurs zu USD
             countEquipment = countMoney * 1.1;
-            
+
             updateData(data, countEquipment, 2);
 
         } else {
@@ -198,7 +298,7 @@ function handleInput(event) {
     } else if (inputId === 'countPassenger' || inputId === 'countDistance' || inputId === 'vehicle1' || inputId === 'vehicle2') {
 
         if (document.getElementById('vehicle1').checked) {
-            
+
             data = dataTravelTrain;
             targetId = 'train_and_car_both_diesel';
 
@@ -207,13 +307,13 @@ function handleInput(event) {
 
             // Überprüfen, ob die eingegebenen Werte gültige Zahlen sind
             if (!isNaN(countPassenger) && !isNaN(countDistance)) {
-            // Multiplizieren der Werte und Anzeigen des Ergebnisses
-            
-            countTravelPassenger = countPassenger;
-            countTravelDistance = countDistance;
+                // Multiplizieren der Werte und Anzeigen des Ergebnisses
 
-            updateData(data, countTravelPassenger, 3);
-            updateData(data, countTravelDistance, 4);
+                countTravelPassenger = countPassenger;
+                countTravelDistance = countDistance;
+
+                updateData(data, countTravelPassenger, 3);
+                updateData(data, countTravelDistance, 4);
 
             } else {
                 console.log('Ungültige Eingabe. Bitte geben Sie gültige Zahlen ein.');
@@ -229,30 +329,30 @@ function handleInput(event) {
 
             // Überprüfen, ob die eingegebenen Werte gültige Zahlen sind
             if (!isNaN(countPassenger) && !isNaN(countDistance)) {
-            // Multiplizieren der Werte und Anzeigen des Ergebnisses
-            
-            countTravelPassenger = countPassenger;
-            countTravelDistance = countDistance;
+                // Multiplizieren der Werte und Anzeigen des Ergebnisses
 
-            updateData(data, countTravelPassenger, 3);
-            updateData(data, countTravelDistance, 4);
+                countTravelPassenger = countPassenger;
+                countTravelDistance = countDistance;
+
+                updateData(data, countTravelPassenger, 3);
+                updateData(data, countTravelDistance, 4);
 
             }
 
         }
-     
-        } else {
-        
-            console.log('Ungültige Eingabe. Bitte geben Sie gültige Zahlen ein.');
-        }
 
-        if (data && targetId) {
-            executeFetch(data, targetId);
-        }
-    };
+    } else {
 
-    
-  
+        console.log('Ungültige Eingabe. Bitte geben Sie gültige Zahlen ein.');
+    }
+
+    if (data && targetId) {
+        executeFetch(data, targetId);
+    }
+};
+
+
+
 
 // Event Listener für alle Input-Felder
 const inputFields = document.querySelectorAll('.inputField');
@@ -265,13 +365,13 @@ inputFields.forEach(inputField => {
 // Funktion für Checkboxen für alle Input-Felder
 function selectThisCheckbox(checkBox) {
     let checkboxes = document.querySelectorAll('.checkbox');
-    checkboxes.forEach(function(currentCheckbox) {
+    checkboxes.forEach(function (currentCheckbox) {
         if (currentCheckbox !== checkBox) {
             currentCheckbox.checked = false;
         }
     });
 
-    checkboxes.forEach(function(currentCheckbox) {
+    checkboxes.forEach(function (currentCheckbox) {
         currentCheckbox.parentElement.classList.remove('selected');
     });
     checkBox.parentElement.classList.add('selected');
@@ -322,6 +422,8 @@ document.getElementById("demo").innerHTML = numbers.reduce(getSum, 0);
 function getSum(total, num) {
   return total + Math.round(num);
 }
+
+
 
 // von stackoverflow
 function filter_list(l) {
