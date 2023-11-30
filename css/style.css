@@ -1,30 +1,42 @@
+
+
+
 body{
-    background-color: rgb(156, 189, 156);
-    font-family: 'Courier New', Courier, monospace
+    background-color: rgb(255, 255, 255);
+    
+    font-family: 'Alexandria', sans-serif;
 }
 
 h1{
-    font-size: 50px;
-    font-family:'Courier New', Courier, monospace
+    
+    font-family:'Alexandria', sans-serif;
 }
 
-#parameterList{
+#totalData{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    width: 100%;
+}
+
+#parameters{
+    width: 100%;
     list-style: none;
     display: flex;
+    flex-wrap: wrap;
     align-items: flex-start;
-}
-
-li{
-    margin: 0 20px;
-}
-
-ul{
-    padding: 0;
-    margin: 0 auto;
+    justify-content: space-evenly;
 }
 
 
 
+
+.information{
+        border-bottom: none;
+        cursor: pointer;
+        text-decoration: none;
+      }
 
 #animationContainer{
     width: 100%;
@@ -35,7 +47,51 @@ ul{
 
 
 svg{
-    max-width: 10%;
+    width: 25%;
     margin: 0;
-    padding: 0;
+    padding: 0; 
 }
+
+
+.wiggle{
+    animation: wiggle 1s ease-in-out infinite;
+}
+
+
+.sub{
+    transform: scale(0.5);
+}
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+    svg{
+        width: 90%;
+        margin: 0;
+        padding: 0; 
+    }
+
+    #resetDesktop{
+        visibility: collapse;
+    }
+
+    .hidden{
+        visibility: collapse;
+    }
+    
+    
+} 
+
+
+
+
+
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+    
+} 
+
+

@@ -4,21 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Green_Media_Production</title>
+    <title>Green_Production_Calculator</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <h1>"Green Media Production" - a calculator</h1>
-
+    
+    <header>
+        <h1 id="title">"Green Production Calculator"</h1>
+        <h3 id="subtitle">Ein CO&#x2082-Rechner für deine Multimediaproduktion</h3>
+    </header>
+    
+    <article id="introduction">Green Production ist ein aufkommendes Thema in der Film- und Medienbranche, denn bei multimedialen Produktionen können Unmengen an
+        CO&#x2082-Emissionen entstehen.
     <br>
-    <article>Green Media Production is an upcoming topic in the industry and has become more important for companies,
-        especially in public broadcasting.</article>
-    <br>
-    <article> One way or another, most of them do not know how to calculate their carbon footprint. This calculator is
-        not complete, but it
-        gives a little insight of what amount of CO2 to expect from a film set. It may be higher depending on the
-        production and their needs.
+        Dieser Rechner soll im Vorfeld einer Produktion helfen, den CO&#x2082-Fussabdruck abzuschätzen. Komplett ist er auf keinen Fall,
+        Der Echtwert kann sich je nach Grösse des Projektes deutlich zum ausgerechneten Wert unterscheiden. Alle Daten wurden mithilfe der Firma
+        <a href="https://www.climatiq.io/">Climatiq</a> ausgerechnet. Alle Ergebnisse beruhen auf Daten, welche für die Region Schweiz gelten.
+        Vielen Dank an dieser Stelle für die Unterstützung, diesen Rechner umsetzen zu können!
     </article>
 
 
@@ -72,11 +75,13 @@
                     <path
                         d="m454.23,10.2c-4.66-1.03-61.23-10.21-69.12-8.41-6.31,1.44,47.02,18.13,45.55,18.77,31.56,25.16,51.93,72.59,50.09,126.24-2.12,61.65-89.11,114.03-130.26,132.12,6.52,5.2,51.68,13.02,64.35,14.62s31.29,3.11,41.24,3.45c57.63,1.98,106.52-59.85,109.21-138.09,2.21-64.48-27.65-119.99-70.48-138.63-9.14-3.98-24.97-6.63-40.58-10.07Z"
                         fill="#333" stroke="#000" stroke-miterlimit="10" stroke-width="3" />
-                    <ellipse cx="165.2" cy="170.09" rx="100.44" ry="137.28" fill="#666" stroke="#000"
+                <g id="filmRolle" fill="green">
+                    <ellipse class="filmRolle" cx="165.2" cy="170.09" rx="100.44" ry="137.28" stroke="#000"
                         stroke-miterlimit="10" stroke-width="3" />
-                    <ellipse cx="378.91" cy="143.22" rx="141.76" ry="104.41"
-                        transform="translate(222.78 516.99) rotate(-88.03)" fill="#666" stroke="#000"
+                    <ellipse class="filmRolle" cx="378.91" cy="143.22" rx="141.76" ry="104.41"
+                        transform="translate(222.78 516.99) rotate(-88.03)" stroke="#000"
                         stroke-miterlimit="10" stroke-width="3" />
+                </g>
                     <polygon points="113.81 321.97 409.22 307.36 409.22 569.1 113.81 551.95 113.81 321.97" fill="#999"
                         stroke="#000" stroke-miterlimit="10" stroke-width="3" />
                     <polygon points="530.46 552.37 409.22 569.1 409.22 307.36 529.83 323.03 530.46 552.37" fill="#666"
@@ -86,7 +91,7 @@
                         fill="#999" stroke="#000" stroke-miterlimit="10" stroke-width="3" />
                     <ellipse cx="504.42" cy="428.8" rx="56.54" ry="70.52" fill="#666" stroke="#000"
                         stroke-miterlimit="10" stroke-width="3" />
-                    <polygon
+                    <polygon id="co2Bar"
                         points="275.96 446.07 61.65 443.53 60.81 382.54 273.71 374.07 274.45 397.81 275.32 425.75 275.96 446.07"
                         fill="#999" stroke="#000" stroke-miterlimit="10" stroke-width="3" />
                     <polygon points="324.51 443.95 274.96 446.07 273.71 374.07 324.94 377.46 324.51 443.95" fill="#666"
@@ -165,64 +170,61 @@
         </svg>
     </div>
 
-    <div id="total"></div>
+    <section id="totalData">
+        <p id="total">Du generierst mit deiner Produktion ungefähr 0 kg CO&#x2082.</p>
+    </section>
 
+    <form title="list" id="parameters">
 
-    <h1>Kategorien</h1>
-
-    <ul title="Liste" id="parameterList">
-
-        <li id="dataHotel">
-            <h2>Hotelübernachtung</h2>
+        <div id="dataHotel">
+            <h2>Hotelübernachtung <abbr title="Erklärung" id="informationHotel" class="hidden information">&#128712</abbr></h2>
             <label>Anzahl Zimmer:</label><br>
             <input type="number" id="countRooms" class="inputField" value="0" min="0" max="10"><br>
             <label>Anzahl Nächte:</label><br>
             <input type="number" id="countNights" class="inputField" value="0" min="0" max="10"><br>
-            <p id="accommodation_type_hotel_stay" class="co2Emission"></p>
-        </li>
+            <p id="accommodation_type_hotel_stay" class="co2Emission">0 kg CO&#x2082</p>
+            <input type="reset" value="Reset" class="inputField resetButton resetMobile" onclick="resetAllData()"/>
+        </div>
 
-        <li id="dataEquipment">
-            <h2>Equipment</h2>
-            <label>Geld ausgegeben:</label><br>
+        <div id="dataEquipment">
+            <h2>Equipment <abbr title="Erklärung" id="informationEquipment" class="hidden information">&#128712</abbr></h2>
+            <label>Geld ausgegeben in CHF:</label><br>
             <input type="number" id="countMoney" class="inputField" value="0" min="0"><br>
-            <p id="electrical_equipment-type_radio_television_communication_equipment_apparatus" class="co2Emission">
-            </p>
-        </li>
+            <p id="electrical_equipment-type_radio_television_communication_equipment_apparatus" class="co2Emission">0 kg CO&#x2082</p>
+            <input type="reset" value="Reset" class="inputField resetButton resetMobile" onclick="resetAllData()"/>
+        </div>
 
-        <li id="dataReisekilometer">
-            <h2>Reisekilometer</h2>
+        <div id="dataTravel">
+            <h2>Reise <abbr title="Emissionen pro Kilometer Reise und Person. Es wird von einem Auto der Mittelklasse ausgegangen, welches mit Diesel betankt wird. Auch beim Zug handelt es sich beim Treibstoff um Diesel." id="informationTravel" class="hidden information">&#128712</abbr></h2>
             <input type="checkbox" id="vehicle1" class="checkbox inputField" value="Zug"
                 onclick="selectThisCheckbox(this)">
-            <label for="vehicle1"> I/We go by train.</label><br>
+            <label for="vehicle1">Reise mit dem Zug</label><br>
             <input type="checkbox" id="vehicle2" class="checkbox inputField" value="Auto"
                 onclick="selectThisCheckbox(this)">
-            <label for="vehicle2"> I/We go by car.</label><br>
+            <label for="vehicle2">Reise mit dem Auto</label><br>
             <label>Anzahl Passagiere:</label><br>
             <input type="number" id="countPassenger" class="inputField" value="0" min="0"><br>
             <label>Anzahl Kilometer:</label><br>
             <input type="number" id="countDistance" class="inputField" value="0" min="0"><br>
-            <p id="train_and_car_both_diesel" class="co2Emission"></p>
-        </li>
+            <p id="train_and_car_both_diesel" class="co2Emission">0 kg CO&#x2082</p>
+            <input type="reset" value="Reset" class="inputField resetButton resetMobile" onclick="resetAllData()"/>
+        </div>
 
-    </ul>
+        <div id="resetData">
+            <input type="reset" value="Reset" id="resetDesktop" class="inputField resetButton" onclick="resetAllData()"/>
+        </div>
+        
+    </form>
 
 
-
-
-
-
-
-    <article> One way or another, most of them do not know how to calculate their carbon footprint. This calculator is
-        not complete, but it
-        gives a little insight of what amount of CO2 to expect from a film set. It may be higher depending on the
-        production and their needs.
+    <article> 
     </article>
 
     <footer>
-        <p>Green Media Production</p>
-        <p>© 2023</p>
-        <p>This website was made by <a href="https://www.digezz.ch/author/nico-caccivio/">Nico Caccivio</a>. All rights
-            reserved.</p>
+        <p>"Green Production Calculator" © 2023</p>
+        <p>Diese Webseite wurde von <a href="https://www.digezz.ch/author/nico-caccivio/">Nico Caccivio</a> im Rahmen des Studienganges 
+            Multimedia Production an der Fachhochschule Graubünden erstellt. Alle Rechte vorbehalten.
+        </p>
     </footer>
 
 
