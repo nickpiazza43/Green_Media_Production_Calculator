@@ -1,97 +1,314 @@
-
-
-
-body{
+body {
     background-color: rgb(255, 255, 255);
-    
     font-family: 'Alexandria', sans-serif;
+    line-height: 1.5;
+    margin: 35px 35px 0px 35px;
+    padding: 0;
 }
 
-h1{
-    
-    font-family:'Alexandria', sans-serif;
+h1 {
+    margin: 0;
 }
 
-#totalData{
+h3 {
+    margin-top: 0;
+}
+
+#container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: 'header header'
+        'article article'
+        'aside content'
+        'aside content'
+        'footer footer';
+}
+
+#header {
+    grid-area: header;
+}
+
+#introduction {
+    grid-area: article;
+    max-width: 100%;
+    text-align: justify;
+    text-wrap: balance;
+}
+
+
+#animationContainer {
+    width: 100%;
+    grid-area: aside;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-evenly;
     align-items: center;
-    margin: 0 auto;
-    width: 100%;
+    margin-top: 10px;
 }
 
-#parameters{
+svg {
+    transform: scale(0.7);
+    width: 60%;
+    margin: 20px;
+    transform-origin: center;
+}
+
+#total {
+    color: black;
+}
+
+#parameterContainer {
+    grid-area: content;
     width: 100%;
-    list-style: none;
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: space-evenly;
+    align-items: center;
+    justify-content: space-between;
 }
 
+.dataField {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid black;
+    background-color: rgb(255, 255, 255);
+}
 
+.dataTitle {
+    margin: 0 0 15px 0;
+    text-decoration: solid underline;
+}
 
+#checkBoxes {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 0 0 10px 0;
+}
 
-.information{
-        border-bottom: none;
-        cursor: pointer;
-        text-decoration: none;
-      }
+.checkbox {
+    margin: 0 10px 0 0;
+}
 
-#animationContainer{
+.dataInputs {
     width: 100%;
     display: flex;
-    justify-content: center;
+    flex-direction: row;
     align-items: center;
 }
 
+.label {
+    width: 20%;
+    height: 5%;
+    color: black;
+}
 
-svg{
-    width: 25%;
+.labelTwoliner {
+    width: 30%;
+    height: 5%;
+    color: black;
+}
+
+.numberField {
+    text-align: left;
+    margin-right: 50px;
+    width: 10%;
+    height: 5%;
+}
+
+.co2Emission {
+    width: 15%;
+    height: 5%;
+    margin: 0 0 0 auto;
+    font-weight: bolder;
+}
+
+.information {
+    border-bottom: none;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+#resetData {
+    width: 100%;
+    margin: 0 auto 0 0;
+}
+
+.resetButton {
+    border: none;
+    padding: 10px;
     margin: 0;
-    padding: 0; 
+    text-decoration: none;
+    font-weight: bolder;
+    background: grey;
+    color: #ffffff;
+    font-family: sans-serif;
+    cursor: pointer;
+    text-align: center;
+}
+
+.resetButton:hover,
+.resetButton:focus {
+    background: green;
+    scale: 0.99;
+}
+
+.resetButton:focus {
+    outline: 1px solid #fff;
+    outline-offset: -4px;
+    background: green;
+    scale: 0.99;
+}
+
+#hiddenMessage {
+    visibility: hidden;
+    width: 100%;
+    background-color: red;
+    padding: 5px;
 }
 
 
-.wiggle{
-    animation: wiggle 1s ease-in-out infinite;
+footer {
+    grid-area: footer;
+    margin: 0;
+    position: sticky;
+    width: 100%;    
+}
+
+footer p {
+    margin: 0;
 }
 
 
-.sub{
-    transform: scale(0.5);
-}
 
 
-/* Extra small devices (phones, 600px and down) */
+
+
+
+/*********  Media Queries für ein handelsübliches Smartphone  *******/
+
 @media only screen and (max-width: 600px) {
 
-    svg{
-        width: 90%;
+
+    body {
+        margin: 15px;
+        padding: 0;
+    }
+
+    #container {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-areas: 'header'
+                             'article'
+                             'aside'
+                             'content'
+                             'footer';
+    }
+
+    #animationContainer {
+        grid-area: aside;
+        margin-top: 25px;
+    }
+
+    svg {
+        width: 85%;
         margin: 0;
-        padding: 0; 
+        padding: 0;
     }
 
-    #resetDesktop{
+    #total {
+        transform: scale(1) !important;
+        width: 80%;
+        justify-content: center;
+        text-wrap: balance;
+    }
+
+    #parameterContainer {
+        grid-area: content;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .dataField {
+        margin-top: 10px;
+    }
+
+    #checkBoxes {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        margin: 0 0 10px 0;
+    }
+
+    .checkbox {
+        margin: 0 10px 0 0;
+    }
+
+    .dataInputs {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        flex-grow: inherit;
+
+    }
+
+    .label {
+        width: 50%;
+        height: 5%;
+        margin: 0 0 10px 0;
+    }
+
+    .labelTwoliner {
+        width: 40%;
+        height: 5%;
+        margin: 0 0 10px 0;
+    }
+
+    .numberField {
+        text-align: left;
+        margin: 0 0 10px 0;
+        width: 30%;
+        height: 5%;
+    }
+
+    .co2Emission {
+        width: 100%;
+        height: 5%;
+        margin-top: 10px;
+    }
+
+
+    #resetData {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .hidden {
         visibility: collapse;
+        display: none;
     }
 
-    .hidden{
+    #hiddenMessage {
         visibility: collapse;
+        display: none;
     }
-    
-    
-} 
 
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 
+    /* für Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
 
-
-
-
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
-
-    
-} 
-
-
+}

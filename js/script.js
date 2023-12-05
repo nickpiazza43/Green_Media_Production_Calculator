@@ -1,5 +1,7 @@
 ///// Daten als Javascriptobjekte von der API vorgegeben /////
 
+///// Hoteldaten /////
+
 const countRoomsInput = document.getElementById('countRooms');
 const countNightsInput = document.getElementById('countNights');
 
@@ -17,6 +19,7 @@ const dataHotel = {
     }
 };
 
+///// Kostendaten /////
 
 const countMoneyInput = document.getElementById('countMoney');
 
@@ -36,7 +39,7 @@ const dataEquipment = {
     }
 }
 
-
+///// Reisedaten /////
 
 const countPassengerInput = document.getElementById('countPassenger');
 const countDistanceInput = document.getElementById('countDistance');
@@ -76,7 +79,7 @@ const dataTravelTrain = {
 }
 
 
-///// Variablen für die Inputdaten /////
+///// Variablen für die Inputdaten, welche zum Total zusammengerechnet werden /////
 
 let co2Hotel = 0;
 let co2Travel = 0;
@@ -85,166 +88,109 @@ let co2Equipment = 0;
 let co2Data = [co2Hotel, co2Travel, co2Equipment];
 
 
-///////// Funktion, welche die Daten fetched und die Funktionen schowData und addData auslöst ////////////
-
-function executeFetch(data, targetId) {
-    // API key 
-    const apiKey = '2EHKF3KSB5MR42GQHR6EQV0JS47D';
-
-    const apiUrl = 'https://beta4.api.climatiq.io/estimate';
-
-    // The headers you'll send with the request
-    const headers = {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
-    };
-
-    fetch(apiUrl, {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(data)
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
 
 
-            showData(data, targetId);
 
-            addData();
+//////// START ////////
 
-        })
-        .catch(error => {
-            console.error('There was a problem with the fetch:', error.message);
-        });
+//////// Funktion, um die Eingabe auf Zahl und Höhe der Zahl zu überprüfen ////////
+
+function checkInput(input) {
+
+    let hiddenMessage = document.getElementById("hiddenMessage");
+
+
+    if (!isNaN(input.value) && input.value !== '') {
+
+        //hiddenMessage.setAttribute("style", "visibility: visible;");
+
+        switch (input.id) {
+
+            case "countRooms":
+            case "countNights":
+            case "countPassenger":
+
+                if (input.value > 10) {
+                    input.value = 0;
+                    hiddenMessage.setAttribute("style", "visibility: visible;");
+                    setTimeout(() => {
+                        hiddenMessage.setAttribute("style", "visibility: hidden;")
+                    }, 3000)
+                }
+
+                break;
+
+            case 'countMoney':
+
+                if (input.value > 10000) {
+                    input.value = 0;
+                    hiddenMessage.setAttribute("style", "visibility: visible;");
+                    setTimeout(() => {
+                        hiddenMessage.setAttribute("style", "visibility: hidden;")
+                    }, 3000)
+                }
+                break;
+
+            case 'countDistance':
+
+                if (input.value > 1000) {
+                    input.value = 0;
+                    hiddenMessage.setAttribute("style", "visibility: visible;");
+                    setTimeout(() => {
+                        hiddenMessage.setAttribute("style", "visibility: hidden;")
+                    }, 3000)
+                }
+                break;
+
+        }
+
+    } else {
+
+        input.value = 0;
+        hiddenMessage.setAttribute("style", "visibility: visible;");
+        setTimeout(() => {
+            hiddenMessage.setAttribute("style", "visibility: hidden;")
+        }, 3000)
+    }
 }
 
 
-///// Funktion, welche die Kamera je nach CO2-Ausstoss vergrössert /////
+//////// Event Listener für alle Input-Felder ////////
 
-function animateCamera(sum) {
+const inputFields = document.querySelectorAll('.inputField');
 
-    let svg = document.getElementById('camera');
-    let blinkLight = document.getElementById('blinkLight');
-    let filmRolle = document.getElementById('filmRolle');
+inputFields.forEach(inputField => {
+    inputField.addEventListener('change', handleInput);
+});
 
-    svg.style.transition = 'transform 0.5s ease-in-out';
-    blinkLight.style.transition = 'fill 0.5s ease-in-out';
-    filmRolle.style.transition = 'fill 0.5s ease-in-out';
+//////// Funktion für alle Checkboxen ////////
 
-    if (sum < 250) {
+function selectThisCheckbox(checkBox) {
+    let checkboxes = document.querySelectorAll('.checkbox');
+    checkboxes.forEach(function (currentCheckbox) {
+        if (currentCheckbox !== checkBox) {
+            currentCheckbox.checked = false;
+        }
+    });
 
-        svg.style.transform = `scale(1)`;
-        blinkLight.setAttribute('fill', 'green')
-        filmRolle.setAttribute('fill', 'green')
-
-    } else if (sum < 500) {
-
-        svg.style.transform = `scale(1.2)`;
-        blinkLight.setAttribute('fill', 'yellow')
-        filmRolle.setAttribute('fill', 'yellow')
-
-    } else if (sum < 1000) {
-
-        svg.style.transform = `scale(1.4)`;
-        blinkLight.setAttribute('fill', 'orange')
-        filmRolle.setAttribute('fill', 'orange')
-
-    } else if (sum < 2500) {
-
-        svg.style.transform = `scale(1.5)`;
-        blinkLight.setAttribute('fill', 'red')
-        filmRolle.setAttribute('fill', 'red')
-
-    } else {
-
-        resetAllData();
-
-        alert("Your are generating too much CO\u00B2! Please reconsider your production plans for the sake of the environment.");
-
-    }
-
-};
-
-
-///// Funktion, welche die CO2-Daten addiert und im HTML darstellt /////
-
-function addData() {
-
-    let sum = 0;
-
-    for (let i = 0; i < co2Data.length; i++) {
-        sum += co2Data[i];
-    }
-    sum = Math.round(sum);
-
-    const listElement = document.getElementById('total');
-
-    listElement.innerHTML = "Du generierst mit deiner Produktion ungefähr " + sum + " kg CO\u2082.";
-
-    animateCamera(sum);
-
-};
-
-
-///// Funktion, welche die CO2-Daten im HTML darstellt /////
-
-function showData(data, targetId) {
-;
-    const listElement = document.getElementById(targetId);
-    listElement.innerHTML = '';
-    let c02 = data.co2e;
-    listElement.innerHTML = c02 + " kg CO\u2082";
-
-    if (targetId === 'accommodation_type_hotel_stay') {
-        co2Data[0] = data.co2e;
-    } else if (targetId === 'electrical_equipment-type_radio_television_communication_equipment_apparatus') {
-        co2Data[1] = data.co2e;
-    } else if (targetId === 'train_and_car_both_diesel') {
-        co2Data[2] = data.co2e;
-    } else {
-        console.log('Daten können nicht angezeigt werden.');
-    };
-
-};
-
-///// Funktion, welche die Inputdaten nach jeder Eingabe updaten je nach Aufbau des Javascriptobjektes /////
-
-function updateData(data, count, id) {
-    if (id == 1) {
-        data.parameters.number = count;
-    } else if (id == 2) {
-        data.parameters.money = count;
-    } else if (id == 3) {
-        data.parameters.passengers = count;
-    } else if (id == 4) {
-        data.parameters.distance = count;
-    } else {
-        
-        console.log('Daten konnten nicht geupdated werden.');
-
-    }
+    checkboxes.forEach(function (currentCheckbox) {
+        currentCheckbox.parentElement.classList.remove('selected');
+    });
+    checkBox.parentElement.classList.add('selected');
 }
 
 ///// Funktion, welche je nach Event, die eingegeben Daten miteinander verrechnet, updatet und an den entsprechenden fetch schickt /////
 
 function handleInput(event) {
 
-
     const inputId = event.target.id;
     let data, targetId;
     //console.log(inputId, data, targetId)
-
 
     if (inputId === 'countRooms' || inputId === 'countNights') {
 
         data = dataHotel;
         targetId = 'accommodation_type_hotel_stay';
-        //console.log(inputId,data,targetId)
 
         const countRooms = parseFloat(countRoomsInput.value);
         const countNights = parseFloat(countNightsInput.value);
@@ -310,7 +256,7 @@ function handleInput(event) {
             // Überprüfen, ob die eingegebenen Werte gültige Zahlen sind
             if (!isNaN(countPassenger) && !isNaN(countDistance)) {
                 // Multiplizieren der Werte und Anzeigen des Ergebnisses
- 
+
                 updateData(data, countPassenger, 3);
                 updateData(data, countDistance, 4);
 
@@ -330,29 +276,158 @@ function handleInput(event) {
 };
 
 
+///// Funktion, welche die Inputdaten nach jeder Eingabe updaten je nach Aufbau des Javascriptobjektes /////
 
-//////// Event Listener für alle Input-Felder ////////
-const inputFields = document.querySelectorAll('.inputField');
+function updateData(data, count, id) {
+    if (id == 1) {
+        data.parameters.number = count;
+    } else if (id == 2) {
+        data.parameters.money = count;
+    } else if (id == 3) {
+        data.parameters.passengers = count;
+    } else if (id == 4) {
+        data.parameters.distance = count;
+    } else {
 
-inputFields.forEach(inputField => {
-    inputField.addEventListener('change', handleInput);
-});
+        console.log('Daten konnten nicht geupdated werden.');
+
+    }
+};
 
 
-//////// Funktion für Checkboxen für alle Input-Felder ////////
-function selectThisCheckbox(checkBox) {
-    let checkboxes = document.querySelectorAll('.checkbox');
-    checkboxes.forEach(function (currentCheckbox) {
-        if (currentCheckbox !== checkBox) {
-            currentCheckbox.checked = false;
-        }
-    });
+///////// Funktion, welche die Daten fetched und die Funktionen schowData und addData auslöst ////////////
 
-    checkboxes.forEach(function (currentCheckbox) {
-        currentCheckbox.parentElement.classList.remove('selected');
-    });
-    checkBox.parentElement.classList.add('selected');
+function executeFetch(data, targetId) {
+    ///// API Key /////
+    const apiKey = '2EHKF3KSB5MR42GQHR6EQV0JS47D';
+
+    const apiUrl = 'https://beta4.api.climatiq.io/estimate';
+
+    ///// Den Header, der zur Authentifizierung mitgesendet werden muss /////
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
+    };
+
+    fetch(apiUrl, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(data)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+
+
+            showData(data, targetId);
+
+            addData();
+
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch:', error.message);
+        });
 }
+
+
+///// Funktion, welche die CO2-Daten im HTML darstellt /////
+
+function showData(data, targetId) {
+    
+    const listElement = document.getElementById(targetId);
+    listElement.innerHTML = '';
+    let c02 = data.co2e;
+    listElement.innerHTML = c02 + " kg CO\u2082";
+
+    if (targetId === 'accommodation_type_hotel_stay') {
+        co2Data[0] = data.co2e;
+    } else if (targetId === 'electrical_equipment-type_radio_television_communication_equipment_apparatus') {
+        co2Data[1] = data.co2e;
+    } else if (targetId === 'train_and_car_both_diesel') {
+        co2Data[2] = data.co2e;
+    } else {
+        console.log('Daten können nicht angezeigt werden.');
+    };
+
+};
+
+
+///// Funktion, welche die CO2-Daten addiert und im HTML darstellt /////
+
+function addData() {
+
+    let sum = 0;
+
+    for (let i = 0; i < co2Data.length; i++) {
+        sum += co2Data[i];
+    }
+    sum = Math.round(sum);
+
+    const listElement = document.getElementById('totalEmissions');
+
+    listElement.innerHTML = sum;
+
+    animateCamera(sum);
+
+};
+
+
+///// Funktion, welche die Kamera je nach CO2-Ausstoss vergrössert /////
+
+function animateCamera(sum) {
+
+    let svg = document.getElementById('camera');
+    let blinkLight = document.getElementById('blinkLight');
+    let filmRolle = document.getElementById('filmRolle');
+    let total = document.getElementById('total');
+
+    svg.style.transition = 'transform 0.5s ease-in-out';
+    blinkLight.style.transition = 'fill 0.5s ease-in-out';
+    filmRolle.style.transition = 'fill 0.5s ease-in-out';
+    total.style.transition = 'transform 0.5s ease-in-out';
+
+    if (sum < 250) {
+
+        svg.style.transform = `scale(0.7)`;
+        blinkLight.setAttribute('fill', 'green')
+        filmRolle.setAttribute('fill', 'green')
+        filmRolle.setAttribute('fill', 'green')
+        total.style.transform = `scale(1)`;
+
+    } else if (sum < 500) {
+
+        svg.style.transform = `scale(0.8)`;
+        blinkLight.setAttribute('fill', 'yellow')
+        filmRolle.setAttribute('fill', 'yellow')
+        total.style.transform = `scale(1.2)`;
+
+    } else if (sum < 1000) {
+
+        svg.style.transform = `scale(0.9)`;
+        blinkLight.setAttribute('fill', 'orange')
+        filmRolle.setAttribute('fill', 'orange')
+        total.style.transform = `scale(1.4)`;
+
+    } else if (sum < 2500) {
+
+        svg.style.transform = `scale(1.1)`;
+        blinkLight.setAttribute('fill', 'red')
+        filmRolle.setAttribute('fill', 'red')
+        total.style.transform = `scale(1.5)`;
+
+    } else {
+
+        resetAllData();
+
+        alert("Du generierst mit deiner Produktion zu viel CO\u2082! Bitte überdenke der Umwelt zuliebe nochmals deine Produktionspläne. Danke!");
+
+    }
+
+};
 
 
 //////// Funktion, um alle Daten zu reseten ////////
@@ -366,14 +441,21 @@ function resetAllData() {
         co2emission.innerHTML = '0 kg CO\u2082';
     });
 
-    co2Data = [0,0,0]
+    let numberFields = document.querySelectorAll('.numberField');
+    numberFields.forEach(numberField => {
+        numberField.value = 0;
+    });
+
+    co2Data = [0, 0, 0]
 
     addData();
-
 
 }
 
 
+//////// Funktion, um alle Daten nach einem Reload der Seite zu reseten ////////
+
+window.addEventListener('onload', resetAllData());
 
 
 
@@ -390,24 +472,7 @@ function resetAllData() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-const co2Emissions = document.querySelectorAll('.co2Emission');
-console.log(co2Emissions);
-*/
+//////// Funktionen zum Testen ////////
 
 
 /*
@@ -472,8 +537,6 @@ onlyNumbers = extract(txt, pat)
 
 
 */
-
-
 
 
 /*function handleInput(event) {
