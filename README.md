@@ -31,9 +31,3 @@ Den Code habe ich mit der neusten Version von VS Code erstellt und mit meinem Gi
 Die svg-Grafik habe ich in Illustrator nach folgender Inspiration nachgebaut und auf meine Bedürfnisse angepasst:
 
 Zuletzt möchte ich noch den Dozent:innen und Mitstudierenden für die wichtigen und lehrreichen Gespräche danken, die mein Projekt weiter voran gebracht haben.
-
-
-# Green_Production_Calculator
- Eine Webseite mit einem CO2-Rechner, der die Emissionen einer schweizerischen Medienproduktion berechnen kann. Natürlich können nicht alle Parameter miteinbezogen werden.
- Es soll vielmehr ein Bewusstsein geschaffen werden für die Unmengen an CO2-Emissionen, welche durch das Erstellen von multimedialen Produkten anfällt.
-
