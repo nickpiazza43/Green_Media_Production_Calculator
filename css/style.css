@@ -37,7 +37,6 @@ h3 {
     text-wrap: balance;
 }
 
-
 #animationContainer {
     width: 100%;
     grid-area: aside;
@@ -198,6 +197,14 @@ footer p {
         padding: 0;
     }
 
+    h1 {
+        font-size: 1.5em;
+    }
+
+    h3 {
+        font-size: 1em;
+    }
+
     #container {
         display: grid;
         grid-template-columns: 1fr;
@@ -207,6 +214,12 @@ footer p {
                              'content'
                              'footer';
     }
+
+    #introduction {
+        text-align: left;
+        text-wrap: balance;
+    }
+
 
     #animationContainer {
         grid-area: aside;

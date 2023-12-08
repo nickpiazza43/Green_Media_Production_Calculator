@@ -19,7 +19,7 @@ const dataHotel = {
     }
 };
 
-///// Kostendaten /////
+///// Equipmentdaten /////
 
 const countMoneyInput = document.getElementById('countMoney');
 
@@ -101,8 +101,6 @@ function checkInput(input) {
 
 
     if (!isNaN(input.value) && input.value !== '') {
-
-        //hiddenMessage.setAttribute("style", "visibility: visible;");
 
         switch (input.id) {
 
@@ -276,7 +274,7 @@ function handleInput(event) {
 };
 
 
-///// Funktion, welche die Inputdaten nach jeder Eingabe updaten je nach Aufbau des Javascriptobjektes /////
+///// Funktion, welche die Inputdaten nach jeder Eingabe updated je nach Aufbau des Javascriptobjektes /////
 
 function updateData(data, count, id) {
     if (id == 1) {
@@ -472,121 +470,3 @@ window.addEventListener('onload', resetAllData());
 
 
 
-//////// Funktionen zum Testen ////////
-
-
-/*
-function animateCamera() {
-    let bild = document.getElementById('animiertesBild');
-
-    // Berechne die Transformation basierend auf dem Wert
-    let rotationGrad = wert * 10; // Beispiel: Drehung um 10 Grad pro Einheit
-
-    // Wende die Transformation auf das Bild an
-    bild.style.transform = `rotate(${rotationGrad}deg)`;
-}
-
-// Beispielaufruf der Funktion mit einem Wert
-animateCamera(10);
-
-
-
-const ages = [32, 33, 16, 40];
-const result = ages.filter(checkAdult);
-
-function checkAdult(age) {
-  return age >= 18;
-}
-
-let sum = 0;
-const numbers = [65, 44, 12, 4];
-numbers.forEach(myFunction);
-
-function myFunction(item) {
-  sum += item;
-}
-
-
-const numbers = [15.5, 2.3, 1.1, 4.7];
-document.getElementById("demo").innerHTML = numbers.reduce(getSum, 0);
-
-function getSum(total, num) {
-  return total + Math.round(num);
-}
-
-
-
-// von stackoverflow
-function filter_list(l) {
-    return l.filter(x => typeof x === "number");
-  }
-  console.log(filter_list([1,2,'a','b']))
-
-//von matlab
-//newStr = erase(str,match) deletes all occurrences of match in str. The erase function returns the remaining text as newStr.
-//If match is an array, then erase deletes every occurrence of every element of match in str. The str and match arguments do not need to be the same size.
-  newStr = erase(str,match)
-
-
-//von matlab
-txt = 'Model1__DK1_5450.0 '
-pat = digitsPattern;
-onlyNumbers = extract(txt, pat)
-
-//https://thispointer.com/javascript-remove-non-numeric-characters-from-string/
-
-
-*/
-
-
-/*function handleInput(event) {
-    const inputId = event.target.id;
-    let data, targetId;
-
-    // Je nach ID des Inputs die entsprechenden Daten und Ziel-ID festlegen
-    switch (inputId) {
-        case 'countRooms':
-        case 'countNights':
-            data = dataHotel;
-            targetId = 'accommodation_type_hotel_stay';
-            break;
-        case 'countEquipment':
-            data = dataEquipment;
-            targetId = 'electrical_equipment-type_radio_television_communication_equipment_apparatus';
-            break;
-        // Füge weitere Cases hinzu, wenn benötigt...
-    }
-
-    // Fetch nur ausführen, wenn data und targetId gesetzt sind
-    if (data && targetId) {
-        executeFetch(apiUrl, data, targetId);
-      //  showData(data, targetId); // Hier wird die showData-Funktion aufgerufen
-    }
-}*/
-
-
-
-/*// Funktion zum Aktualisieren
-function updateData(constData) {
-    constData.parameters.number = constData;
-}
-
-//const countNights = parseFloat(countNightsInput.value);
-
-const collections = document.querySelectorAll('.inputField');
-//console.log(collections);
-
-collections.forEach(collection => {
-    collection.addEventListener('input', function() {
-
-        console.log('Input!!');
-
-    });
-});*/
-
-
-/*let countHotel = 10;
-
-function updateDatas(countHotel) {
-    data.parameters.number = countHotel;
-}*/
