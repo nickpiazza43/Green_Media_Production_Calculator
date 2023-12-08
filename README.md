@@ -4,7 +4,7 @@
 ## Idee und Zusammenhang mit der Bachelorarbeit
 
 Für mein Webprojekt in IM5 gestaltete ich einen CO2-Rechner, der die Emissionen einer schweizerischen Medienproduktion berechnen kann.
-Das Resultat ist leider nicht sehr repräsentativ, da nicht alle Parameter miteinbezogen werden konnten. Die Ergebnisse sind jedoch valide und werden mithilfe der Firma "climatiq.io" berechnet. Mit der Applikation soll ein Bewusstsein geschaffen werden für die Unmengen an CO2-Emissionen, welche durch das Erstellen von multimedialem Content anfällt.
+Das Resultat ist leider nicht sehr repräsentativ, da nicht alle Parameter miteinbezogen werden konnten. Die Ergebnisse sind jedoch valide und werden mithilfe der Firma "climatiq.io" berechnet. Mit der Applikation soll ein Bewusstsein geschaffen werden für die Unmengen an CO2-Emissionen, welche durch das Erstellen von multimedialem Content anfällt. Mein Bachelorthema "Green Production" befasst sich mit den Produktionsansätzen, um diese Emissionen zu verringern.
 
 ## Funktionen der Webseite
 
